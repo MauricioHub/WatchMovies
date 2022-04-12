@@ -9,4 +9,8 @@ class MovieRepository {
     suspend fun getAllFavoriteMovies(): List<MovieModel> {
         return api.getFavoriteMovies()
     }
+
+    suspend fun getAllRatedMovies(): List<MovieModel> {
+        return api.getRatedMovies()
+    }
 }

@@ -10,4 +10,8 @@ interface MovieApiClient {
     @GET("account/624b4f44bdc34c004e694593/movie/favorites")
     suspend fun getFavoriteMovies(@Header("Authorization") authorization:String,
                                   @Header("Content-Type") application:String = "application/json;charset=utf-8"): Response<DataMovie>
+
+    @GET("account/624b4f44bdc34c004e694593/movie/rated")
+    suspend fun getRatedMovies(@Header("Authorization") authorization:String,
+                                  @Header("Content-Type") application:String = "application/json;charset=utf-8"): Response<DataMovie>
 }

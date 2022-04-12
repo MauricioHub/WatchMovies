@@ -18,4 +18,11 @@ class MovieService {
             response.body()?.results ?: emptyList()
         }
     }
+
+    suspend fun getRatedMovies(): List<MovieModel>{
+        return withContext(Dispatchers.IO){
+            val response : Response<DataMovie> = retrofit.create(MovieApiClient::class.java).getRatedMovies("Bearer $bearerToken")
+            response.body()?.results ?: emptyList()
+        }
+    }
 }
