@@ -6,15 +6,16 @@ import androidx.lifecycle.viewModelScope
 import com.example.watchmovies.data.model.MovieModel
 import com.example.watchmovies.domain.GetMoviesUseCase
 import com.example.watchmovies.domain.GetRatedUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MovieViewModel: ViewModel() {
+@HiltViewModel
+class MovieViewModel @Inject constructor(private val getMoviesUseCase: GetMoviesUseCase,
+                                         private val getRatedUseCase: GetRatedUseCase): ViewModel() {
 
     val allMoviesLst = MutableLiveData<List<MovieModel>>()
     val loading = MutableLiveData<Boolean>()
-
-    val getMoviesUseCase = GetMoviesUseCase()
-    val getRatedUseCase = GetRatedUseCase()
 
     fun fetchFavoriteMovies(){
         viewModelScope.launch {

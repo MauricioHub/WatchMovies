@@ -14,7 +14,9 @@ import com.example.watchmovies.databinding.ActivityMainBinding
 import com.example.watchmovies.ui.view.adapters.CategoryAdapter
 import com.example.watchmovies.ui.view.adapters.MovieAdapter
 import com.example.watchmovies.ui.viewmodel.MovieViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
