@@ -1,7 +1,7 @@
 package com.example.watchmovies.ui.view.activities
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -14,12 +14,14 @@ import com.example.watchmovies.databinding.ActivityMainBinding
 import com.example.watchmovies.ui.view.adapters.CategoryAdapter
 import com.example.watchmovies.ui.view.adapters.MovieAdapter
 import com.example.watchmovies.ui.viewmodel.MovieViewModel
+import com.example.watchmovies.utils.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var sessionManager : SessionManager
 
     private val movieViewModel : MovieViewModel by viewModels()
 
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         initCategoryRecycler()
         setupCategoryRecycler(getCategoriesLst())
         initRecycler()
+        sessionManager = SessionManager(this)
 
         movieViewModel.fetchFavoriteMovies()
 
@@ -63,7 +66,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onItemSelected(movieModel: MovieModel){
-        Toast.makeText(this, "Soy el elemento: ${movieModel.originalTitle}", Toast.LENGTH_SHORT).show()
+        sessionManager.saveMovieItem(movieModel)
+        startActivity(Intent(this, MovieDetailActivity::class.java));
     }
 
     private fun onCategorySelected(categoryModel: CategoryModel){
