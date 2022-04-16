@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.watchmovies.R
-import com.example.watchmovies.data.model.MovieModel
 import com.example.watchmovies.domain.model.MovieItem
 import com.example.watchmovies.ui.view.holders.MovieHolder
 

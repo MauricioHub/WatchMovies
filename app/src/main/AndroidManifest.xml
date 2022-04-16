@@ -23,6 +23,8 @@
         </activity>
 		<activity
             android:name=".ui.view.activities.MovieDetailActivity"/>
+        <activity
+            android:name=".ui.view.activities.MovieTrailerActivity"/>
     </application>
 
 </manifest>
