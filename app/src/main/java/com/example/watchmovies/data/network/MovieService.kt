@@ -1,7 +1,9 @@
 package com.example.watchmovies.data.network
 
 import com.example.watchmovies.data.model.DataMovie
+import com.example.watchmovies.data.model.DataTrailer
 import com.example.watchmovies.data.model.MovieModel
+import com.example.watchmovies.data.model.TrailerModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -32,6 +34,21 @@ class MovieService @Inject constructor(
             } catch (exception: Exception){
                 throw Exception()
             }
+        }
+    }
+
+    suspend fun getAllTrailers(codeMovie: String, apiKey: String): List<TrailerModel>{
+        return withContext(Dispatchers.IO){
+            val response : Response<DataTrailer> =
+                api.getAllTrailers(codeMovie, apiKey,"Bearer $bearerToken")
+            response.body()?.results ?: emptyList()
+            /*try {
+                val response : Response<DataTrailer> =
+                    api.getAllTrailers(codeMovie, apiKey,"Bearer $bearerToken")
+                response.body()?.results ?: emptyList()
+            }catch (exception: Exception){
+                throw Exception()
+            }*/
         }
     }
 }

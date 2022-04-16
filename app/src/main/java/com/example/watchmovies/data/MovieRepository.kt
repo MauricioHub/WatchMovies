@@ -4,6 +4,7 @@ import com.example.watchmovies.data.database.dao.MovieDao
 import com.example.watchmovies.data.database.entities.MovieEntity
 import com.example.watchmovies.data.network.MovieService
 import com.example.watchmovies.domain.model.MovieItem
+import com.example.watchmovies.domain.model.TrailerItem
 import com.example.watchmovies.domain.model.toDomain
 import javax.inject.Inject
 
@@ -18,7 +19,7 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    suspend fun getFavoriteMoviesFromApi(): List<MovieItem> {
+    private suspend fun getFavoriteMoviesFromApi(): List<MovieItem> {
         val response = api.getFavoriteMovies()
         response.map { it.category = "Favorites" }
         return response.map { it.toDomain() }
@@ -27,6 +28,11 @@ class MovieRepository @Inject constructor(
     private suspend fun getTopRatedMoviesFromApi(): List<MovieItem> {
         val response = api.getRatedMovies()
         response.map { it.category = "Top Rated" }
+        return response.map { it.toDomain() }
+    }
+
+    suspend fun getAllTrailersFromApi(codeMovie: String, apiKey: String): List<TrailerItem>{
+        val response = api.getAllTrailers(codeMovie, apiKey)
         return response.map { it.toDomain() }
     }
 

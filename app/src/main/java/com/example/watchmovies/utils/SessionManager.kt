@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.example.watchmovies.R
 import com.example.watchmovies.data.model.MovieModel
 import com.example.watchmovies.domain.model.MovieItem
+import com.example.watchmovies.domain.model.TrailerItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -15,6 +16,7 @@ class SessionManager (context : Context) {
     companion object {
         const val MOVIES_LIST= "movies_list"
         const val MOVIE_ITEM= "movie_item"
+        const val TRAILER_ITEM= "trailer_item"
     }
 
     fun saveMoviesList(moviesLst: List<MovieItem>){
@@ -47,6 +49,23 @@ class SessionManager (context : Context) {
         val gson = Gson()
         val jsonText: String? = prefs.getString(MOVIE_ITEM, null)
         val itemType = object : TypeToken<MovieItem>() {}.type
+
+        return gson.fromJson(jsonText, itemType)
+    }
+
+    fun saveTrailerItem(trailer: TrailerItem){
+        val gson = Gson()
+        val jsonText = gson.toJson(trailer)
+
+        val editor = prefs.edit()
+        editor.putString(TRAILER_ITEM, jsonText)
+        editor.apply()
+    }
+
+    fun fetchTrailerItem() : TrailerItem {
+        val gson = Gson()
+        val jsonText: String? = prefs.getString(TRAILER_ITEM, null)
+        val itemType = object : TypeToken<TrailerItem>() {}.type
 
         return gson.fromJson(jsonText, itemType)
     }
