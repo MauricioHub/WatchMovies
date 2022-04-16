@@ -28,7 +28,7 @@ class MovieDetailActivity : AppCompatActivity(R.layout.activity_movie_detail) {
         supportActionBar?.setDisplayShowHomeEnabled(true);
         binding.tvDetailTitle.text = movieItem.originalTitle
         binding.tvDetailDescription.text = movieItem.overview
-        binding.wvMovie.loadUrl(baseUrl + movieItem.id + movieItem.originalTitle)
+        binding.wvMovie.loadUrl(baseUrl + movieItem.codeMovie + movieItem.originalTitle)
 
         binding.wvMovie.settings.javaScriptEnabled = true;
         binding.wvMovie.settings.domStorageEnabled = true;

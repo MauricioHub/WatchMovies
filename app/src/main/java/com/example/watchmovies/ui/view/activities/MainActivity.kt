@@ -1,7 +1,7 @@
 package com.example.watchmovies.ui.view.activities
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -9,8 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watchmovies.data.model.CategoryModel
-import com.example.watchmovies.data.model.MovieModel
 import com.example.watchmovies.databinding.ActivityMainBinding
+import com.example.watchmovies.domain.model.MovieItem
 import com.example.watchmovies.ui.view.adapters.CategoryAdapter
 import com.example.watchmovies.ui.view.adapters.MovieAdapter
 import com.example.watchmovies.ui.viewmodel.MovieViewModel
@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var sessionManager : SessionManager
+    private val initialCategory = "Favorites"
 
     private val movieViewModel : MovieViewModel by viewModels()
 
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         initRecycler()
         sessionManager = SessionManager(this)
 
-        movieViewModel.fetchFavoriteMovies()
+        movieViewModel.fetchMoviesByCategory(initialCategory)
 
         movieViewModel.allMoviesLst.observe(this, Observer{ moviesLst ->
             setupRecycler(moviesLst)
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvCategories.setHasFixedSize(true)
     }
 
-    private fun setupRecycler(favoriteMovies: List<MovieModel>){
+    private fun setupRecycler(favoriteMovies: List<MovieItem>){
         binding.rvMovies.adapter = MovieAdapter(favoriteMovies) { movieModel ->  onItemSelected(movieModel) }
     }
 
@@ -65,16 +66,20 @@ class MainActivity : AppCompatActivity() {
         binding.rvCategories.adapter = CategoryAdapter(categoryModelLst) { categoryModel ->  onCategorySelected(categoryModel) }
     }
 
-    private fun onItemSelected(movieModel: MovieModel){
+    private fun onItemSelected(movieModel: MovieItem){
         sessionManager.saveMovieItem(movieModel)
-        startActivity(Intent(this, MovieDetailActivity::class.java));
+        Log.d("MESSAGE>>>>>>>>>>>>>>>", "CODE MOVIE: ${movieModel.codeMovie}")
+        Log.d("MESSAGE>>>>>>>>>>>>>>>", "CATEGORY MOVIE: ${movieModel.category}")
+        Log.d("MESSAGE>>>>>>>>>>>>>>>", "CATEGORY MOVIE: ${movieModel.voteAverage}")
+        //startActivity(Intent(this, MovieDetailActivity::class.java));
     }
 
     private fun onCategorySelected(categoryModel: CategoryModel){
-        when(categoryModel.name){
-            "Favorites" -> movieViewModel.fetchFavoriteMovies()
+        movieViewModel.fetchMoviesByCategory(categoryModel.name)
+        /*when(categoryModel.name){
+            "Favorites" -> movieViewModel.fetchFavoriteMovies(categoryModel.name)
             "Top Rated" -> movieViewModel.fetchRatedMovies()
-        }
+        }*/
     }
 
     private fun getCategoriesLst(): MutableList<CategoryModel>{

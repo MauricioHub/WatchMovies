@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.watchmovies.R
 import com.example.watchmovies.data.model.MovieModel
+import com.example.watchmovies.domain.model.MovieItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -16,7 +17,7 @@ class SessionManager (context : Context) {
         const val MOVIE_ITEM= "movie_item"
     }
 
-    fun saveMoviesList(moviesLst: List<MovieModel>){
+    fun saveMoviesList(moviesLst: List<MovieItem>){
         val gson = Gson()
         val jsonText = gson.toJson(moviesLst)
 
@@ -25,15 +26,15 @@ class SessionManager (context : Context) {
         editor.apply()
     }
 
-    fun fetchMoviesList() : List<MovieModel> {
+    fun fetchMoviesList() : List<MovieItem> {
         val gson = Gson()
         val jsonText: String? = prefs.getString(MOVIES_LIST, null)
-        val itemType = object : TypeToken<ArrayList<MovieModel>>() {}.type
+        val itemType = object : TypeToken<ArrayList<MovieItem>>() {}.type
 
-        return gson.fromJson<ArrayList<MovieModel>>(jsonText, itemType)
+        return gson.fromJson<ArrayList<MovieItem>>(jsonText, itemType)
     }
 
-    fun saveMovieItem(movie: MovieModel){
+    fun saveMovieItem(movie: MovieItem){
         val gson = Gson()
         val jsonText = gson.toJson(movie)
 
@@ -42,10 +43,10 @@ class SessionManager (context : Context) {
         editor.apply()
     }
 
-    fun fetchMovieItem() : MovieModel {
+    fun fetchMovieItem() : MovieItem {
         val gson = Gson()
         val jsonText: String? = prefs.getString(MOVIE_ITEM, null)
-        val itemType = object : TypeToken<MovieModel>() {}.type
+        val itemType = object : TypeToken<MovieItem>() {}.type
 
         return gson.fromJson(jsonText, itemType)
     }
