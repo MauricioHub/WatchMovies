@@ -8,13 +8,16 @@ import javax.inject.Inject
 class GetMoviesUseCase @Inject constructor(private val repository: MovieRepository) {
 
     suspend operator fun invoke(category: String): List<MovieItem>{
-        val movies = repository.getAllMoviesFromApi(category)
-
-        return if (movies.isNotEmpty()){
-            repository.clearSelectedMovies(category)
-            repository.insertMovies(movies.map { it.toDatabase() })
-            movies
-        } else{
+        return try {
+            val movies = repository.getAllMoviesFromApi(category)
+            if (movies.isNotEmpty()){
+                repository.clearSelectedMovies(category)
+                repository.insertMovies(movies.map { it.toDatabase() })
+                movies
+            } else{
+                repository.getAllMoviesFromDatabase(category)
+            }
+        } catch (exception: Exception){
             repository.getAllMoviesFromDatabase(category)
         }
     }

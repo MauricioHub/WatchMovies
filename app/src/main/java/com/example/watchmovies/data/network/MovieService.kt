@@ -5,6 +5,7 @@ import com.example.watchmovies.data.model.MovieModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import java.lang.Exception
 import javax.inject.Inject
 
 class MovieService @Inject constructor(
@@ -14,15 +15,23 @@ class MovieService @Inject constructor(
 
     suspend fun getFavoriteMovies(): List<MovieModel>{
         return withContext(Dispatchers.IO){
-            val response : Response<DataMovie> = api.getFavoriteMovies("Bearer $bearerToken")
-            response.body()?.results ?: emptyList()
+            try {
+                val response : Response<DataMovie> = api.getFavoriteMovies("Bearer $bearerToken")
+                response.body()?.results ?: emptyList()
+            } catch (exception: Exception){
+                throw Exception()
+            }
         }
     }
 
     suspend fun getRatedMovies(): List<MovieModel>{
         return withContext(Dispatchers.IO){
-            val response : Response<DataMovie> = api.getRatedMovies("Bearer $bearerToken")
-            response.body()?.results ?: emptyList()
+            try {
+                val response : Response<DataMovie> = api.getRatedMovies("Bearer $bearerToken")
+                response.body()?.results ?: emptyList()
+            } catch (exception: Exception){
+                throw Exception()
+            }
         }
     }
 }

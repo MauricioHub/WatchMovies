@@ -1,5 +1,6 @@
 package com.example.watchmovies.ui.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watchmovies.data.model.CategoryModel
+import com.example.watchmovies.data.model.MovieModel
 import com.example.watchmovies.databinding.ActivityMainBinding
 import com.example.watchmovies.domain.model.MovieItem
 import com.example.watchmovies.ui.view.adapters.CategoryAdapter
@@ -68,18 +70,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun onItemSelected(movieModel: MovieItem){
         sessionManager.saveMovieItem(movieModel)
-        Log.d("MESSAGE>>>>>>>>>>>>>>>", "CODE MOVIE: ${movieModel.codeMovie}")
-        Log.d("MESSAGE>>>>>>>>>>>>>>>", "CATEGORY MOVIE: ${movieModel.category}")
-        Log.d("MESSAGE>>>>>>>>>>>>>>>", "CATEGORY MOVIE: ${movieModel.voteAverage}")
-        //startActivity(Intent(this, MovieDetailActivity::class.java));
+        startActivity(Intent(this, MovieDetailActivity::class.java));
     }
 
     private fun onCategorySelected(categoryModel: CategoryModel){
         movieViewModel.fetchMoviesByCategory(categoryModel.name)
-        /*when(categoryModel.name){
-            "Favorites" -> movieViewModel.fetchFavoriteMovies(categoryModel.name)
-            "Top Rated" -> movieViewModel.fetchRatedMovies()
-        }*/
     }
 
     private fun getCategoriesLst(): MutableList<CategoryModel>{

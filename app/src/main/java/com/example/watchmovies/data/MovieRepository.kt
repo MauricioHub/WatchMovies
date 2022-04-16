@@ -24,7 +24,7 @@ class MovieRepository @Inject constructor(
         return response.map { it.toDomain() }
     }
 
-    suspend fun getTopRatedMoviesFromApi(): List<MovieItem> {
+    private suspend fun getTopRatedMoviesFromApi(): List<MovieItem> {
         val response = api.getRatedMovies()
         response.map { it.category = "Top Rated" }
         return response.map { it.toDomain() }
