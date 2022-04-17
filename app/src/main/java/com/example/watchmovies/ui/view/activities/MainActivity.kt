@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         setupCategoryRecycler(getCategoriesLst())
         initRecycler()
         sessionManager = SessionManager(this)
+        setupSearchView(binding.svSearchMovie)
 
         movieViewModel.fetchMoviesByCategory(initialCategory)
 
@@ -80,5 +82,31 @@ class MainActivity : AppCompatActivity() {
         categoriesLst.add(CategoryModel("Favorites"))
         categoriesLst.add(CategoryModel("Top Rated"))
         return categoriesLst
+    }
+
+    private fun setUpNameObserver(name: String) {
+        movieViewModel.fetchMoviesByName(name)
+    }
+
+    private fun setupObserver() {
+        movieViewModel.foundMoviesLst.observe(this, Observer{ moviesLst ->
+            setupRecycler(moviesLst)
+        })
+    }
+
+    private fun setupSearchView(view: SearchView) {
+        view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(name: String): Boolean {
+                setUpNameObserver(name)
+                setupObserver()
+                return false
+            }
+
+            override fun onQueryTextChange(name: String): Boolean {
+                setUpNameObserver(name)
+                setupObserver()
+                return false
+            }
+        })
     }
 }

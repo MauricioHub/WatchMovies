@@ -13,6 +13,9 @@ interface MovieDao {
             "ORDER BY original_title ASC")
     suspend fun getAllMovies(category: String): List<MovieEntity>
 
+    @Query("SELECT * FROM movie_table WHERE original_title LIKE '%' || :title || '%'")
+    fun getAllMoviesByName(title: String): List<MovieEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(movies: List<MovieEntity>)
 

@@ -42,13 +42,6 @@ class MovieService @Inject constructor(
             val response : Response<DataTrailer> =
                 api.getAllTrailers(codeMovie, apiKey,"Bearer $bearerToken")
             response.body()?.results ?: emptyList()
-            /*try {
-                val response : Response<DataTrailer> =
-                    api.getAllTrailers(codeMovie, apiKey,"Bearer $bearerToken")
-                response.body()?.results ?: emptyList()
-            }catch (exception: Exception){
-                throw Exception()
-            }*/
         }
     }
 }

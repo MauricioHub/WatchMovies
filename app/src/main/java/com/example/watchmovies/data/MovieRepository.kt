@@ -6,6 +6,8 @@ import com.example.watchmovies.data.network.MovieService
 import com.example.watchmovies.domain.model.MovieItem
 import com.example.watchmovies.domain.model.TrailerItem
 import com.example.watchmovies.domain.model.toDomain
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
@@ -39,6 +41,13 @@ class MovieRepository @Inject constructor(
     suspend fun getAllMoviesFromDatabase(category: String): List<MovieItem> {
         val response = movieDao.getAllMovies(category)
         return response.map { it.toDomain() }
+    }
+
+    suspend fun getMoviesByNameFromDatabase(name: String): List<MovieItem> {
+        return withContext(Dispatchers.IO){
+            val response = movieDao.getAllMoviesByName(name)
+            response.map { it.toDomain() }
+        }
     }
 
     suspend fun insertMovies(movies: List<MovieEntity>){

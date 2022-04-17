@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.watchmovies.domain.GetMoviesUseCase
 import com.example.watchmovies.domain.GetTrailersUseCase
+import com.example.watchmovies.domain.SearchMoviesUseCase
 import com.example.watchmovies.domain.model.MovieItem
 import com.example.watchmovies.domain.model.TrailerItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,10 +15,12 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieViewModel @Inject constructor(
                                 private val getMoviesUseCase: GetMoviesUseCase,
-                                private val getTrailersUseCase: GetTrailersUseCase): ViewModel() {
+                                private val getTrailersUseCase: GetTrailersUseCase,
+                                private val searchMoviesUseCase: SearchMoviesUseCase): ViewModel() {
 
     val allMoviesLst = MutableLiveData<List<MovieItem>>()
     val allTrailersLst = MutableLiveData<List<TrailerItem>>()
+    val foundMoviesLst = MutableLiveData<List<MovieItem>>()
     val loading = MutableLiveData<Boolean>()
 
     fun fetchMoviesByCategory(category: String){
@@ -38,6 +41,16 @@ class MovieViewModel @Inject constructor(
 
             if (!result.isNullOrEmpty()){
                 allTrailersLst.postValue(result)
+            }
+        }
+    }
+
+    fun fetchMoviesByName(name: String){
+        viewModelScope.launch {
+            val result = searchMoviesUseCase(name)
+
+            if (!result.isNullOrEmpty()){
+                foundMoviesLst.postValue(result)
             }
         }
     }
