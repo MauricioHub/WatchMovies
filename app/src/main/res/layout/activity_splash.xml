@@ -9,7 +9,7 @@
     tools:context=".ui.view.activities.SplashActivity">
 
     <ImageView
-        android:id="@+id/splashScreenImage"
+        android:id="@+id/ivSplash"
         android:layout_width="300dp"
         android:layout_height="200dp"
         android:src="@drawable/cinema_hall_vector"

@@ -16,14 +16,14 @@ class MovieRepository @Inject constructor(
 
     suspend fun getAllMoviesFromApi(category: String): List<MovieItem> {
         return when(category){
-            "Favorites" -> getFavoriteMoviesFromApi()
+            "Popular" -> getFavoriteMoviesFromApi()
             else -> getTopRatedMoviesFromApi()
         }
     }
 
     private suspend fun getFavoriteMoviesFromApi(): List<MovieItem> {
         val response = api.getFavoriteMovies()
-        response.map { it.category = "Favorites" }
+        response.map { it.category = "Popular" }
         return response.map { it.toDomain() }
     }
 

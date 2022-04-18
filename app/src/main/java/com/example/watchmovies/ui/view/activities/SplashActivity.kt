@@ -4,11 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.watchmovies.databinding.ActivitySplashBinding
 import com.example.watchmovies.ui.animations.AnimationManager
 import com.example.watchmovies.ui.viewmodel.SplashViewModel
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -26,16 +26,13 @@ class SplashActivity : AppCompatActivity() {
         supportActionBar!!.hide()
 
         val animator = AnimationManager()
-        animator.totalAnimations(binding.splashScreenImage)
+        animator.animate(binding.ivSplash)
 
-        lifecycleScope.launch {
-            splashViewModel.isLoading.catch {}
-                .collect { it ->
-                    if (!it) {
-                        throwMainActivity()
-                    }
-                }
-        }
+        splashViewModel.loading.observe(this, Observer{
+            lifecycleScope.launch {
+                throwMainActivity()
+            }
+        })
     }
 
     private fun throwMainActivity(){

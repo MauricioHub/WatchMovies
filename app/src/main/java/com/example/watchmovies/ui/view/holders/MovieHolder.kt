@@ -13,9 +13,9 @@ class MovieHolder(view: View): RecyclerView.ViewHolder(view) {
 
     fun render(movie: MovieItem, onClickListener:(MovieItem) -> Unit){
         binding.tvTitle.text = movie.originalTitle
-        binding.tvRating.text = movie.voteAverage.toString()
-        binding.tvPopularity.text = movie.popularity.toString()
-        binding.tvReleaseDate.text = movie.releaseDate
+        binding.tvRating.text = "RATING: " + movie.voteAverage.toString()
+        binding.tvPopularity.text = "POPULARITY: " + movie.popularity.toString()
+        binding.tvReleaseDate.text = "DATE: " + movie.releaseDate
         Picasso.get().load(ConstantsUtils.BASE_IMAGE_URL + movie.posterPath)
             .into(binding.ivPoster)
 

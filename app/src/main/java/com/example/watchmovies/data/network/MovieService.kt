@@ -17,7 +17,8 @@ class MovieService @Inject constructor(
     suspend fun getFavoriteMovies(): List<MovieModel>{
         return withContext(Dispatchers.IO){
             try {
-                val response : Response<DataMovie> = api.getFavoriteMovies("Bearer ${ConstantsUtils.BEARER_TOKEN}")
+                val response : Response<DataMovie> = api.getFavoriteMovies(ConstantsUtils.API_KEY,
+                    "Bearer ${ConstantsUtils.BEARER_TOKEN}")
                 response.body()?.results ?: emptyList()
             } catch (exception: Exception){
                 throw Exception()
@@ -28,7 +29,8 @@ class MovieService @Inject constructor(
     suspend fun getRatedMovies(): List<MovieModel>{
         return withContext(Dispatchers.IO){
             try {
-                val response : Response<DataMovie> = api.getRatedMovies("Bearer ${ConstantsUtils.BEARER_TOKEN}")
+                val response : Response<DataMovie> = api.getRatedMovies(ConstantsUtils.API_KEY,
+                    "Bearer ${ConstantsUtils.BEARER_TOKEN}")
                 response.body()?.results ?: emptyList()
             } catch (exception: Exception){
                 throw Exception()

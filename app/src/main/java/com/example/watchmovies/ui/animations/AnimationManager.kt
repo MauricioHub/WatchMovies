@@ -6,10 +6,10 @@ import android.view.View
 
 class AnimationManager {
 
-    fun totalAnimations(view: View){
+    fun animate(view: View){
         translator(view)
-        rotator(view)
         scalier(view)
+        rotator(view)
     }
 
     private fun translator(view: View){

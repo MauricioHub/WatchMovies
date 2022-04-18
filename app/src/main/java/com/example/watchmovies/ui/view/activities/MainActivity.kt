@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getCategoriesLst(): MutableList<CategoryModel>{
         var categoriesLst:MutableList<CategoryModel> = ArrayList()
-        categoriesLst.add(CategoryModel("Favorites"))
+        categoriesLst.add(CategoryModel("Popular"))
         categoriesLst.add(CategoryModel("Top Rated"))
         return categoriesLst
     }
