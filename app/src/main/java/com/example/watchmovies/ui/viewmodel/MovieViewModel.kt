@@ -37,11 +37,13 @@ class MovieViewModel @Inject constructor(
 
     fun fetchAllTrailers(codeMovie: String, apiKey: String){
         viewModelScope.launch {
+            loading.postValue(true)
             val result = getTrailersUseCase(codeMovie, apiKey)
 
             if (!result.isNullOrEmpty()){
                 allTrailersLst.postValue(result)
             }
+            loading.postValue(false)
         }
     }
 

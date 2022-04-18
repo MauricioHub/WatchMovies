@@ -9,11 +9,11 @@ class GetMoviesUseCase @Inject constructor(private val repository: MovieReposito
 
     suspend operator fun invoke(category: String): List<MovieItem>{
         return try {
-            val movies = repository.getAllMoviesFromApi(category)
-            if (movies.isNotEmpty()){
+            val moviesLst = repository.getAllMoviesFromApi(category)
+            if (moviesLst.isNotEmpty()){
                 repository.clearSelectedMovies(category)
-                repository.insertMovies(movies.map { it.toDatabase() })
-                movies
+                repository.insertMovies(moviesLst.map { it.toDatabase() })
+                moviesLst
             } else{
                 repository.getAllMoviesFromDatabase(category)
             }

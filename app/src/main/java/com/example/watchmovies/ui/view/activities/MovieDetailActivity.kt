@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.watchmovies.databinding.ActivityMovieDetailBinding
@@ -38,6 +39,10 @@ class MovieDetailActivity : AppCompatActivity() {
 
         movieViewModel.allTrailersLst.observe(this, Observer{ trailersLst ->
             setupTrailerRecycler(trailersLst)
+        })
+
+        movieViewModel.loading.observe(this, Observer {
+            binding.trailerLoading.isVisible = it
         })
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
