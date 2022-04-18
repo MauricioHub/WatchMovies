@@ -11,6 +11,7 @@ import com.example.watchmovies.databinding.ActivityMovieDetailBinding
 import com.example.watchmovies.domain.model.TrailerItem
 import com.example.watchmovies.ui.view.adapters.TrailerAdapter
 import com.example.watchmovies.ui.viewmodel.MovieViewModel
+import com.example.watchmovies.utils.ConstantsUtils
 import com.example.watchmovies.utils.SessionManager
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,9 +22,6 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMovieDetailBinding
     private lateinit var sessionManager : SessionManager
-    private val baseURL = "https://image.tmdb.org/t/p/w500/"
-    private val apiKey = "d8e8e840d1dd7a4e713bff5822ae7a42"
-    private val synopsis = "SYNOPSIS: "
 
     private val movieViewModel : MovieViewModel by viewModels()
 
@@ -35,7 +33,7 @@ class MovieDetailActivity : AppCompatActivity() {
         val movieItem = sessionManager.fetchMovieItem()
 
         initTrailerRecycler()
-        movieViewModel.fetchAllTrailers(movieItem.codeMovie.toString(), apiKey)
+        movieViewModel.fetchAllTrailers(movieItem.codeMovie.toString(), ConstantsUtils.API_KEY)
 
         movieViewModel.allTrailersLst.observe(this, Observer{ trailersLst ->
             setupTrailerRecycler(trailersLst)
@@ -47,8 +45,9 @@ class MovieDetailActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        binding.tvDetailDescription.text = synopsis + movieItem.overview
-        Picasso.get().load(baseURL + movieItem.posterPath).into(binding.ivDetailPoster)
+        binding.tvDetailDescription.text = "SYNOPSIS: " + movieItem.overview
+        Picasso.get().load(ConstantsUtils.BASE_IMAGE_URL + movieItem.posterPath)
+            .into(binding.ivDetailPoster)
     }
 
     override fun onSupportNavigateUp(): Boolean {

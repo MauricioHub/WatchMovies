@@ -1,6 +1,7 @@
 package com.example.watchmovies.core.di
 
 import com.example.watchmovies.data.network.MovieApiClient
+import com.example.watchmovies.utils.ConstantsUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +18,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(): Retrofit{
         return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/")
+            .baseUrl(ConstantsUtils.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

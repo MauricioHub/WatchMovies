@@ -15,6 +15,7 @@ import com.example.watchmovies.domain.model.MovieItem
 import com.example.watchmovies.ui.view.adapters.CategoryAdapter
 import com.example.watchmovies.ui.view.adapters.MovieAdapter
 import com.example.watchmovies.ui.viewmodel.MovieViewModel
+import com.example.watchmovies.utils.ConstantsUtils
 import com.example.watchmovies.utils.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +24,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var sessionManager : SessionManager
-    private val initialCategory = "Favorites"
 
     private val movieViewModel : MovieViewModel by viewModels()
 
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         sessionManager = SessionManager(this)
         setupSearchView(binding.svSearchMovie)
 
-        movieViewModel.fetchMoviesByCategory(initialCategory)
+        movieViewModel.fetchMoviesByCategory(ConstantsUtils.INITIAL_CATEGORY)
 
         movieViewModel.allMoviesLst.observe(this, Observer{ moviesLst ->
             setupRecycler(moviesLst)
