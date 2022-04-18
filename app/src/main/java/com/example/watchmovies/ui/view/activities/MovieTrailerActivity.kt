@@ -31,9 +31,10 @@ class MovieTrailerActivity : AppCompatActivity() {
     }
 
     private fun playVideo(key:String){
+        lifecycle.addObserver(binding.youtubePlayerView)
         binding.youtubePlayerView.getYouTubePlayerWhenReady(object: YouTubePlayerCallback {
             override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.loadVideo(key,0F)
+                youTubePlayer.loadVideo(key,3F)
             }
         } )
     }
